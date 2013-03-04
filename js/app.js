@@ -44,12 +44,12 @@ function toggleButton(el) {
     g.updateOptions({ logscale: scale });
   } else if (el.parent().attr('id') == 'period') {
     var
-      date     = new Date(),
-      firstDay = new Date(date.getFullYear(), date.getMonth(), 1),
-      lastDay  = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      date        = new Date(),
+      firstDay    = new Date(date.getFullYear(), date.getMonth(), 1),
+      currentDay  = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
     if (el.text() == 'Current month') {
-      zoomGraphX(firstDay, lastDay);
+      zoomGraphX(firstDay, currentDay);
     } else {
       unzoomGraph();
     }
