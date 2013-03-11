@@ -118,7 +118,7 @@ function get_visible_charts() {
 
   $charts .= !empty($GLOBALS['account']['twitter'])  ? 'true, true, ' : 'false, false, ';
   $charts .= !empty($GLOBALS['account']['identica']) ? 'true, true, ' : 'false, false, ';
-  $charts .= !empty($GLOBALS['account']['identica']) ? 'true, '       : 'false, ';
+  $charts .= !empty($GLOBALS['account']['facebook']) ? 'true, '       : 'false, ';
 
   return $charts;
 }
