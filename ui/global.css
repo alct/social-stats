@@ -79,7 +79,7 @@ body {
       width: 16px;
       height: 9px;
       content: '';
-      background: url('arrow.png') no-repeat top left;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAQAAACRI2S5AAAAMUlEQVR4AX3KQREAAAgCQTrRv4Gd0PfNCDz3hPle5slELnxDQkZCRvIwEjCSh5GkTFqSpYvb6kMmuwAAAABJRU5ErkJggg==') no-repeat top left;
     }
     #accounts li a {
       display: block;
@@ -210,7 +210,7 @@ body {
     input[type="checkbox"] + label {
       display: inline-block;
       padding: 0 0 0 23px;
-      background: url('checkbox.png') left -74px no-repeat;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAABaCAAAAABC/lPSAAAAmUlEQVR4Xu3UMQ7CMAxGYW8sSL1Cr9EbwA3o5bhNF+TJUwYGhJIdoXirYmxMm4xMLPRtn5P5h5II310olnmEGFi8HO4jAGVZeh6hA1w5n6Cb1JX7Sar19Szu/uaf8WPor0ZZPMDOuPoxGN3EdjgYM6lTyOJxiOoSCT1KRS1t/+TNmzfXPUOKRd3uWVI3e8akRqnhD0zs+HLPXqpOESNMoc4BAAAAAElFTkSuQmCC') left -74px no-repeat;
       cursor: pointer;
     }
     input[type="checkbox"]:checked + label {

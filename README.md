@@ -2,7 +2,7 @@
 
 _Social network services stats. API independant._
 
-Current Version: **0.4.1.1**
+Current Version: **0.4.1.2**
 
 ![Social Stats 0.4](http://imgs.be/513361fd-12dc.png)
 
