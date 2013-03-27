@@ -1,39 +1,51 @@
 # Social Stats
 
-_Social network services stats. API independant._
+_Social stats is an handy tool that logs stats from various social networks and displays it in an ergonomic web interface. It is API-independant which means that you can gather information about any account, don't need to provide credentials and won't have to deal with API updates and/or restrictions._
 
-Current Version: **0.4.1.2**
+Current Version: **0.5**
 
-![Social Stats 0.4](http://imgs.be/513361fd-12dc.png)
+![Social Stats 0.5](http://imgs.be/5152ffdc-1517.png)
+
+## Features
+
+### Information from the following social networks:
+
+* Twitter (followers, tweets)
+* Identica (followers, notices)
+* Facebook pages (likes)
+
+### Dynamic graphs
+
+Graphs can be zoomed in/out around specific values and/or periods.
+
+### Interoperable log format
+
+Social stats generates two types of CSV log:
+
+* The **raw log** provides detailed information about every attempt to collect data and whether it worked or not
+* The **clean log** is used to generate graphs and can easily be imported in any application
 
 ## Requirements
 
-* PHP (cURL)
+* PHP
+* PHP cURL library
 * cron
-* [DYGraphs](https://github.com/danvk/dygraphs)
-* [jQuery](https://github.com/jquery/jquery)
+* [DYGraphs](https://github.com/danvk/dygraphs) (included)
+* [jQuery](https://github.com/jquery/jquery) (included)
 
 ## Installation instructions
 
-1. rename the `config.example.php` file into `config.php`
-2. add your information in the `config.php` file:
+1. Clone the repository to your web server
 
-        $accounts = array(
-          // one account = one array
-          array(
-            'title'    => '', // i.e. Account Title
-            'twitter'  => '', // i.e. your_account
-            'identica' => '', // i.e. your_account
-            'facebook' => '', // i.e. https://facebook.com/pages/0123456789
-          ),
-        );
+        git clone https://github.com/alct/social-stats.git
 
-3. upload the `social-stats/` folder on your webserver
-4. add the following rule to your crontab for each `account`:
+2. Rename `config.example.php` into `config.php`
+3. Add your information in `config.php`
+4. Add the following rule to your crontab
 
-        0 0,6,12,18 * * * wget -q -O "/dev/null" "http://domain.tld/path/to/social-stats/?update&id=account"
+        0 0,6,12,18 * * * wget -q -O "/dev/null" "http://domain.tld/path/to/social-stats/?update"
 
-5. profit
+5. Profit
 
 ## Licence
 

@@ -1,5 +1,10 @@
 <?php
 
+// prevent caching
+
+header('Cache-Control: no-cache, must-revalidate');
+header('Expires: ' . gmdate('D, d M Y H:i:s', time() - 60 * 60 * 24) . ' GMT');
+
 // check if there is a config file
 
 if (!file_exists('config.php') && file_exists('config.example.php')) {
@@ -14,53 +19,39 @@ if (!file_exists('config.php') && file_exists('config.example.php')) {
 require_once 'config.php';
 require_once 'functions/app.inc.php';
 
-// set the $account var containing information about a given id
+// set the $currentIdentity var (first identity in the config file by default)
 
-set_account(isset($_GET['id']) ? $_GET['id'] : '');
+set_current_identity();
 
 // logs
 
-$localLog    = 'log/social-stats_' . $account['twitter'] . '.csv';
-$localRawLog = 'log/social-stats_' . $account['twitter'] . '.raw.csv';
+$localLog    = 'log/social-stats_' . $currentIdentity['twitter'] . '.csv';
+$localRawLog = 'log/social-stats_' . $currentIdentity['twitter'] . '.raw.csv';
 
-// prevent caching
+// handle updates
 
-header('Cache-Control: no-cache, must-revalidate');
-header('Expires: ' . gmdate('D, d M Y H:i:s', time() - 60 * 60 * 24) . ' GMT');
-
-// handle account related errors
-
-if (count($GLOBALS['accounts']) == 0 || !is_array($account) || empty($account['twitter'])) {
-  if (count($GLOBALS['accounts']) == 0) {
-    $error = 'config_empty';
-  } elseif (!is_array($account)) {
-    $error = 'account_not-found';
-  } elseif (empty($account['twitter'])) {
-    $error = 'account_no-twitter';
+if (isset($_GET['update'])) {
+  if ($json = update_log()) {
+    echo $json;
+  } else {
+    header('HTTP/1.0 404 Not Found');
   }
-
-  require_once 'templates/error.php';
 
   exit;
 }
 
-// handle updates
+// handle identity related errors
 
-if (isset($_GET['update']) || isset($_GET['export'])) {
-  echo '{"timestamp": ' . time() . ', "account": "' . $account['twitter'] . '", "status": {';
-
-  if (isset($_GET['update'])) {
-    echo '"update": ';
-    echo update_log() ? '1, ' : '0, ';
+if (count($GLOBALS['identities']) == 0 || !is_array($currentIdentity) || empty($currentIdentity['twitter'])) {
+  if (count($GLOBALS['identities']) == 0) {
+    $error = 'config_empty';
+  } elseif (!is_array($currentIdentity)) {
+    $error = 'identity_not-found';
+  } elseif (empty($currentIdentity['twitter'])) {
+    $error = 'identity_no-twitter';
   }
 
-  if (isset($_GET['export'])) {
-    echo '"export": ';
-    echo export_log() ? '1,' : '0,';
-  }
-
-  echo '}}';
-
+  require_once 'templates/error.php';
   exit;
 }
 
@@ -75,12 +66,16 @@ if (!file_exists($localRawLog)) {
   }
 }
 
+// export raw log
+
 if (!export_log()) {
   $error = 'log_permission';
 
   require_once 'templates/error.php';
   exit;
 }
+
+// include base template
 
 require_once 'templates/base.php';
 

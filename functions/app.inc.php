@@ -2,66 +2,118 @@
 
 require_once 'parsers.inc.php';
 
-function set_account($id) {
-  global $account;
-
+function get_identity($id) {
   $id = str_replace(array('/','[','\\','^','$','.','|','?','*','+','(',')','{','}','&','=','<','>','\'','"'), '', $id);
 
-  if (count($GLOBALS['accounts']) > 0) {
+  if (count($GLOBALS['identities']) > 0) {
     if (empty($id)) {
-      $account['title']    = $GLOBALS['accounts'][0]['title'];
-      $account['twitter']  = $GLOBALS['accounts'][0]['twitter'];
-      $account['identica'] = $GLOBALS['accounts'][0]['identica'];
-      $account['facebook'] = $GLOBALS['accounts'][0]['facebook'];
+      $identity['title']    = $GLOBALS['identities'][0]['title'];
+      $identity['twitter']  = $GLOBALS['identities'][0]['twitter'];
+      $identity['identica'] = $GLOBALS['identities'][0]['identica'];
+      $identity['facebook'] = $GLOBALS['identities'][0]['facebook'];
+
+      return $identity;
     } else {
-      foreach ($GLOBALS['accounts'] as $array) {
+      foreach ($GLOBALS['identities'] as $array) {
         if (preg_grep('/^' . $id . '$/i', $array)) {
-          $account['title']    = $array['title'];
-          $account['twitter']  = $array['twitter'];
-          $account['identica'] = $array['identica'];
-          $account['facebook'] = $array['facebook'];
+          $identity['title']    = $array['title'];
+          $identity['twitter']  = $array['twitter'];
+          $identity['identica'] = $array['identica'];
+          $identity['facebook'] = $array['facebook'];
+
+          return $identity;
           break;
         }
       }
     }
+  } else {
+    return false;
   }
 }
 
-function update_log() {
-  twitter($GLOBALS['account']['twitter']);
-  identica($GLOBALS['account']['identica']);
-  facebook($GLOBALS['account']['facebook']);
+function set_current_identity() {
+  global $currentIdentity;
 
-  if (!file_exists($GLOBALS['localRawLog'])) {
-    $headers =
-      'date'               . ',' .
-      'Twitter followers'  . ',' .
-      'Twitter tweets'     . ',' .
-      'Identica followers' . ',' .
-      'Identica notices'   . ',' .
-      'Facebook likes'     . "\n"
-    ;
-  } else {
-    $headers = '';
-  }
+  $id = isset($_GET['id']) ? $_GET['id'] : '';
 
-  if ($file = @fopen($GLOBALS['localRawLog'], 'a+')) {
-    fputs($file,
-      $headers .
-      time()                            . ',' .
-      $GLOBALS['twitter']['followers']  . ',' .
-      $GLOBALS['twitter']['tweets']     . ',' .
-      $GLOBALS['identica']['followers'] . ',' .
-      $GLOBALS['identica']['notices']   . ',' .
-      $GLOBALS['facebook']['likes']     . "\n"
-    );
-
-    fclose($file);
-
+  if ($currentIdentity = get_identity($id)) {
     return true;
   } else {
     return false;
   }
+}
+
+function update_log() {
+  $id         = isset($_GET['id']) ? $_GET['id'] : '';
+  $identities = array();
+
+  if (!empty($id)) {
+    if (get_identity($id)) {
+      $identities[0] = get_identity($id);
+    } else {
+      return false;
+      break;
+    }
+  } else {
+    $identities = $GLOBALS['identities'];
+  }
+
+  header('Content-Type: application/json');
+
+  $json  = '';
+
+  $items = count($identities);
+  $i     = 0;
+
+  foreach ($identities as $array) {
+    if (!file_exists('log/social-stats_' . $array['twitter'] . '.raw.csv')) {
+      $headers =
+        'date'               . ',' .
+        'Twitter followers'  . ',' .
+        'Twitter tweets'     . ',' .
+        'Identica followers' . ',' .
+        'Identica notices'   . ',' .
+        'Facebook likes'     . "\n"
+      ;
+    } else {
+      $headers = '';
+    }
+
+    $json .= '"' . $array['twitter'] . '":{';
+
+    twitter($array['twitter']);
+    $json .= '"twitter":{"followers":' . $GLOBALS['twitter']['followers'] . ',"tweets":' . $GLOBALS['twitter']['tweets'] . '},';
+
+    identica($array['identica']);
+    $json .= !empty($array['identica']) ? '"identica":{"followers":' . $GLOBALS['identica']['followers'] . ',"notices":' . $GLOBALS['identica']['notices'] . '},' : '';
+
+    facebook($array['facebook']);
+    $json .= !empty($array['facebook']) ? '"facebook":{"likes":' . $GLOBALS['facebook']['likes'] . '},' :  '';
+
+    if ($file = @fopen('log/social-stats_' . $array['twitter'] . '.raw.csv', 'a+')) {
+      fputs($file,
+        $headers .
+        time()                            . ',' .
+        $GLOBALS['twitter']['followers']  . ',' .
+        $GLOBALS['twitter']['tweets']     . ',' .
+        $GLOBALS['identica']['followers'] . ',' .
+        $GLOBALS['identica']['notices']   . ',' .
+        $GLOBALS['facebook']['likes']     . "\n"
+      );
+
+      fclose($file);
+
+      $json .= '"log":1';
+    } else {
+      $json .= '"log":0';
+    }
+
+    $json .= '}' . ($i < $items - 1 ? ',' : '');
+    $i++;
+  }
+
+  $json = str_replace('error', '"error"', $json);
+  return '{' . $json . '}';
 }
 
 function export_log() {
@@ -116,34 +168,34 @@ function export_log() {
 function get_visible_charts() {
   global $charts;
 
-  $charts .= !empty($GLOBALS['account']['twitter'])  ? 'true, true, ' : 'false, false, ';
-  $charts .= !empty($GLOBALS['account']['identica']) ? 'true, true, ' : 'false, false, ';
-  $charts .= !empty($GLOBALS['account']['facebook']) ? 'true, '       : 'false, ';
+  $charts .= !empty($GLOBALS['currentIdentity']['twitter'])  ? 'true, true, ' : 'false, false, ';
+  $charts .= !empty($GLOBALS['currentIdentity']['identica']) ? 'true, true, ' : 'false, false, ';
+  $charts .= !empty($GLOBALS['currentIdentity']['facebook']) ? 'true, '       : 'false, ';
 
   return $charts;
 }
 
-function get_account_menu() {
-  global $accountMenu;
+function get_identities_menu() {
+  global $identitiesMenu;
 
-  $accountMenu .= '  <div id="accounts">' . "\n";
-  $accountMenu .= '    <p><span>Current account:</span> <span class="current" tabindex="2">' . $GLOBALS['account']['title'] . '</span></p>' . "\n";
-  $accountMenu .= '    <ul>' . "\n";
+  $identitiesMenu .= '  <div id="identities">' . "\n";
+  $identitiesMenu .= '    <p><span>Current identity:</span> <span class="current" tabindex="2">' . $GLOBALS['currentIdentity']['title'] . '</span></p>' . "\n";
+  $identitiesMenu .= '    <ul>' . "\n";
 
   $i = 3;
 
-  foreach ($GLOBALS['accounts'] as $array) {
-    $current = $array['title'] == $GLOBALS['account']['title'] ? ' class="current"' : '';
+  foreach ($GLOBALS['identities'] as $array) {
+    $current = $array['title'] == $GLOBALS['currentIdentity']['title'] ? ' class="current"' : '';
 
-    $accountMenu .= '      <li' . $current . '><a href="?id=' . $array['twitter'] . '" tabindex="' . $i . '">' . $array['title'] . '</a></li>' . "\n";
+    $identitiesMenu .= '      <li' . $current . '><a href="?id=' . $array['twitter'] . '" tabindex="' . $i . '">' . $array['title'] . '</a></li>' . "\n";
 
     $i++;
   }
 
-  $accountMenu .= '    </ul>' . "\n";
-  $accountMenu .= '  </div>' . "\n";
+  $identitiesMenu .= '    </ul>' . "\n";
+  $identitiesMenu .= '  </div>' . "\n";
 
-  return $accountMenu;
+  return $identitiesMenu;
 }
 
 ?>

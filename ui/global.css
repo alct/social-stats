@@ -32,32 +32,32 @@ body {
   h1 a:focus {
     background: #4c5865;
   }
-  #accounts {
+  #identities {
     position: absolute;
     top: 0;
     right: .5em;
   }
-    #accounts p {
+    #identities p {
       margin:  0;
     }
-      #accounts p span:first-child {
+      #identities p span:first-child {
         display: block;
         position: absolute;
         top: -9999px;
         left: -999px;
       }
-      #accounts p .current {
+      #identities p .current {
         padding: .5em 1em;
         text-decoration: none;
         color: #fff;
         cursor: pointer;
         outline: none;
       }
-      #accounts p .current:hover,
-      #accounts p .current:focus {
+      #identities p .current:hover,
+      #identities p .current:focus {
         background: #4c5865;
       }
-    #accounts ul {
+    #identities ul {
       position: absolute;
       z-index: 1000;
       top: 0;
@@ -71,7 +71,7 @@ body {
       border: 1px solid rgba(0, 0, 0, .2);
       border-radius: 3px;
     }
-    #accounts ul:before {
+    #identities ul:before {
       display: block;
       position: absolute;
       top: -9px;
@@ -81,14 +81,14 @@ body {
       content: '';
       background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAQAAACRI2S5AAAAMUlEQVR4AX3KQREAAAgCQTrRv4Gd0PfNCDz3hPle5slELnxDQkZCRvIwEjCSh5GkTFqSpYvb6kMmuwAAAABJRU5ErkJggg==') no-repeat top left;
     }
-    #accounts li a {
+    #identities li a {
       display: block;
       padding: .4em 1em;
       text-decoration: none;
       color: #000;
     }
-    #accounts li a:hover,
-    #accounts li a:focus {
+    #identities li a:hover,
+    #identities li a:focus {
       color: #fff;
       outline: none;
       background: #9bc2b3;

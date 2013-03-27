@@ -1,35 +1,35 @@
 
-// account menu
+// identities menu
 
-$('#accounts ul').hide();
+$('#identities ul').hide();
 
-$('#accounts p .current').on('focus', function() {
-  $('#accounts ul').show();
+$('#identities p .current').on('focus', function() {
+  $('#identities ul').show();
 });
 
-$('#accounts p .current').on('keydown', function(e) {
+$('#identities p .current').on('keydown', function(e) {
   if (e.keyCode == 9) {
-    $('#accounts ul').addClass('tab');
+    $('#identities ul').addClass('tab');
   }
 });
 
-$('#accounts ul').on('mouseover', function() {
-  $('#accounts ul').addClass('mouse');
+$('#identities ul').on('mouseover', function() {
+  $('#identities ul').addClass('mouse');
 });
 
-$('#accounts ul').on('mouseout', function() {
-  $('#accounts ul').removeClass('mouse').removeClass('tab');
+$('#identities ul').on('mouseout', function() {
+  $('#identities ul').removeClass('mouse').removeClass('tab');
 });
 
-$('#accounts ul li:last-child a').on('blur', function() {
-  if ($('#accounts ul').hasClass('tab')) {
-    $('#accounts ul').hide().removeClass('tab');
+$('#identities ul li:last-child a').on('blur', function() {
+  if ($('#identities ul').hasClass('tab')) {
+    $('#identities ul').hide().removeClass('tab');
   }
 });
 
-$('#accounts p .current').on('blur', function() {
-  if (!$('#accounts ul').is('.tab, .mouse')) {
-    $('#accounts ul').hide();
+$('#identities p .current').on('blur', function() {
+  if (!$('#identities ul').is('.tab, .mouse')) {
+    $('#identities ul').hide();
   }
 });
 
