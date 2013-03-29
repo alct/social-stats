@@ -31,7 +31,7 @@
 <div id="content">
 <div class="wrapper">
   <div id="options">
-		<?= (!empty($currentIdentity['twitter']))  ? '
+    <?= (!empty($currentIdentity['twitter']))  ? '
     <div class="network twitter">
       <div>
         <input type="checkbox" checked="checked" name="twitter[]" id="twitter_followers" value="0" tabindex="105" />
@@ -42,7 +42,7 @@
         <label for="twitter_tweets">Twitter tweets</label>
       </div>
     </div>' : '' ?>
-		<?= (!empty($currentIdentity['identica'])) ? '
+    <?= (!empty($currentIdentity['identica'])) ? '
     <div class="network identica">
       <div>
         <input type="checkbox" checked="checked" name="identica[]" id="identica_followers" value="2" tabindex="107" />
@@ -53,7 +53,7 @@
         <label for="identica_notices">Identica notices</label>
       </div>
     </div>' : '' ?>
-		<?= (!empty($currentIdentity['facebook'])) ? '
+    <?= (!empty($currentIdentity['facebook'])) ? '
     <div class="network facebook">
       <div>
         <input type="checkbox" checked="checked" name="facebook[]" id="facebook_likes" value="4" tabindex="109" />
@@ -66,19 +66,19 @@
     </div>
   </div>
 
-	<div id="graph" class="graph"></div>
+  <div id="graph" class="graph"></div>
 
-	<h2>Accounts</h2>
+  <h2>Accounts</h2>
 
-	<ul>
-		<?= (!empty($currentIdentity['twitter']))  ? '<li>Twitter account: <a href="https://twitter.com/' . $currentIdentity['twitter'] . '">@' . $currentIdentity['twitter'] . '</a></li>' : '' ?>
-		<?= (!empty($currentIdentity['identica'])) ? '<li>Identi.ca account: <a href="https://identi.ca/' . $currentIdentity['identica'] . '">@' . $currentIdentity['identica'] . '</a></li>' : '' ?>
-		<?= (!empty($currentIdentity['facebook'])) ? '<li>Facebook page: <a href="' . $currentIdentity['facebook'] . '">' . $currentIdentity['facebook'] . '</a></li>' : '' ?>
-	</ul>
+  <ul>
+    <?= (!empty($currentIdentity['twitter']))  ? '<li>Twitter account: <a href="https://twitter.com/' . $currentIdentity['twitter'] . '">@' . $currentIdentity['twitter'] . '</a></li>' : '' ?>
+    <?= (!empty($currentIdentity['identica'])) ? '<li>Identi.ca account: <a href="https://identi.ca/' . $currentIdentity['identica'] . '">@' . $currentIdentity['identica'] . '</a></li>' : '' ?>
+    <?= (!empty($currentIdentity['facebook'])) ? '<li>Facebook page: <a href="' . $currentIdentity['facebook'] . '">' . $currentIdentity['facebook'] . '</a></li>' : '' ?>
+  </ul>
 
-	<h2>Data</h2>
+  <h2>Data</h2>
 
-	<p>This chart is based uppon the data gathered in this <a href="<?= $localLog ?>">log</a> [<a href="<?= $localRawLog ?>">raw</a>].</p>
+  <p>This chart is based uppon the data gathered in this <a href="<?= $localLog ?>">log</a> [<a href="<?= $localRawLog ?>">raw</a>].</p>
 </div>
 </div>
 
