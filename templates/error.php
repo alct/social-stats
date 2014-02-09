@@ -29,6 +29,8 @@ if ($error == 'config_not-found') {
   echo '<h2>No Twitter account set</h2><p>Please set a Twitter account in the <code>/config.php</code> file.</p>';
 } elseif ($error == 'log_permission') {
   echo '<h2>Access forbidden</h2><p>There was an error trying to read and/or write log file.</p>';
+} elseif ($error == 'php_curl') {
+  echo '<h2>Missing cURL module for PHP</h2><p>Please install <code><a href="http://php.net/manual/en/book.curl.php">cURL module</a></code> for PHP.</p>';
 }
 
 ?>

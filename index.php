@@ -66,6 +66,15 @@ if (!file_exists($localRawLog)) {
   }
 }
 
+// if cURL module isn't available
+
+if (!function_exists('curl_init')) {
+  $error = 'php_curl';
+
+  require_once 'templates/error.php';
+  exit;
+}
+
 // export raw log
 
 if (!export_log()) {
