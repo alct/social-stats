@@ -2,7 +2,7 @@
 
 _Social stats is a handy tool that logs stats from various social networks and displays it in an ergonomic web interface. It is API-independant which means that you can gather information about any account, don't need to provide credentials and won't have to deal with API updates and/or restrictions._
 
-Current Version: **0.5.0.1**
+Current Version: **0.5.0.2**
 
 ![Social Stats 0.5](http://imgs.be/5152ffdc-1517.png)
 
@@ -28,7 +28,7 @@ Social stats generates two types of CSV log:
 ## Requirements
 
 * PHP
-* PHP cURL library
+* [PHP cURL library](http://php.net/manual/en/book.curl.php)
 * cron
 * [DYGraphs](https://github.com/danvk/dygraphs) (included)
 * [jQuery](https://github.com/jquery/jquery) (included)
