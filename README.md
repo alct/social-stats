@@ -2,7 +2,7 @@
 
 _Social stats is a handy tool that logs stats from various social networks and displays it in an ergonomic web interface. It is API-independant which means that you can gather information about any account, don't need to provide credentials and won't have to deal with API updates and/or restrictions._
 
-Current Version: **0.5.0.2**
+Current Version: **0.5.0.3**
 
 ![Social Stats 0.5](http://imgs.be/5152ffdc-1517.png)
 

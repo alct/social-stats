@@ -15,8 +15,8 @@ function twitter($account) {
     curl_setopt($req, CURLOPT_URL, 'https://twitter.com/' . $account);
 
     if ($res = curl_exec($req)) {
-      $twitter['followers'] = preg_match('!Followers<strong title="([\d.,]+)">(?:[\d.,]+[MK]?)</strong>!iU', $res, $matches) ? str_replace(array(',', '.'), '', $matches[1]) : 'error';
-      $twitter['tweets']    = preg_match('!Tweets<strong title="([\d.,]+)">(?:[\d.,]+[MK]?)</strong>!iU', $res, $matches) ? str_replace(array(',', '.'), '', $matches[1]) : 'error';
+      $twitter['followers'] = preg_match('!Followers<strong title="([\d.,]+)"[^>]*>(?:[\d.,]+[MK]?)</strong>!iU', $res, $matches) ? str_replace(array(',', '.'), '', $matches[1]) : 'error';
+      $twitter['tweets']    = preg_match('!Tweets<strong title="([\d.,]+)"[^>]*>(?:[\d.,]+[MK]?)</strong>!iU', $res, $matches) ? str_replace(array(',', '.'), '', $matches[1]) : 'error';
 
       curl_close($req);
     } else {
