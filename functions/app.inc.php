@@ -52,7 +52,6 @@ function update_log() {
       $identities[0] = get_identity($id);
     } else {
       return false;
-      break;
     }
   } else {
     $identities = $GLOBALS['identities'];
