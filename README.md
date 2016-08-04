@@ -1,10 +1,8 @@
 # Social Stats
 
-_Social stats is a handy tool that logs stats from various social networks and displays it in an ergonomic web interface. It is API-independent which means that you can gather information about any account, don't need to provide credentials and won't have to deal with API updates and/or restrictions._
+Social stats is a handy tool that logs stats from various social networks and displays it in an ergonomic web interface. It is API-independent which means that you can gather information about any account, don't need to provide credentials and won't have to deal with API updates and/or restrictions.
 
-Current Version: **0.5.0.3**
-
-![Social Stats 0.5](http://imgs.be/5152ffdc-1517.png)
+![Social Stats](http://imgs.be/5152ffdc-1517.png)
 
 ## Features
 
@@ -27,8 +25,8 @@ Social stats generates two types of CSV log:
 
 ## Requirements
 
-* PHP
-* [PHP cURL library](http://php.net/manual/en/book.curl.php)
+* PHP 5.4+
+* [cURL](http://curl.haxx.se/libcurl/php/)
 * cron
 * [DYGraphs](https://github.com/danvk/dygraphs) (included)
 * [jQuery](https://github.com/jquery/jquery) (included)
@@ -47,10 +45,6 @@ Social stats generates two types of CSV log:
 
 5. Profit
 
-## Licence
+## License
 
-Copyright &copy; 2013- André LOCONTE
-
-This program is free software: you can redistribute it and/or modify it under the terms of the [GNU Affero General Public License](https://gnu.org/licenses/agpl.html) as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+[GPLv3](LICENSE)
