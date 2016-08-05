@@ -46,8 +46,7 @@ $('#identities p .current').on('blur', function() {
 
 function toggleButton(el) {
 
-    el.parent().children().removeClass('current');
-    el.addClass('current');
+    el.addClass('current').siblings().removeClass('current');
 
     if (el.parent().attr('id') == 'scale') {
 
