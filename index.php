@@ -7,11 +7,12 @@ header('Expires: ' . gmdate('D, d M Y H:i:s', time() - 60 * 60 * 24) . ' GMT');
 
 // check if there is a config file
 
-if (!file_exists('config.php') && file_exists('config.example.php')) {
-  $error = 'config_not-found';
+if (! file_exists('config.php') && file_exists('config.example.php')) {
 
-  require_once 'templates/error.php';
-  exit;
+    $error = 'config_not-found';
+
+    require_once 'templates/error.php';
+    exit;
 }
 
 // load ressources
@@ -31,61 +32,73 @@ $localRawLog = 'log/social-stats_' . $currentIdentity['twitter'] . '.raw.csv';
 // handle updates
 
 if (isset($_GET['update'])) {
-  if ($json = update_log()) {
-    echo $json;
-  } else {
-    header('HTTP/1.0 404 Not Found');
-  }
 
-  exit;
+    if ($json = update_log()) {
+
+        echo $json;
+
+    } else {
+
+        header('HTTP/1.0 404 Not Found');
+    }
+
+    exit;
 }
 
 // handle identity related errors
 
-if (count($GLOBALS['identities']) == 0 || !is_array($currentIdentity) || empty($currentIdentity['twitter'])) {
-  if (count($GLOBALS['identities']) == 0) {
-    $error = 'config_empty';
-  } elseif (!is_array($currentIdentity)) {
-    $error = 'identity_not-found';
-  } elseif (empty($currentIdentity['twitter'])) {
-    $error = 'identity_no-twitter';
-  }
+if (count($GLOBALS['identities']) == 0 || ! is_array($currentIdentity) || empty($currentIdentity['twitter'])) {
 
-  require_once 'templates/error.php';
-  exit;
+    if (count($GLOBALS['identities']) == 0) {
+
+        $error = 'config_empty';
+
+    } elseif (! is_array($currentIdentity)) {
+
+        $error = 'identity_not-found';
+
+    } elseif (empty($currentIdentity['twitter'])) {
+
+        $error = 'identity_no-twitter';
+    }
+
+    require_once 'templates/error.php';
+    exit;
 }
 
 // if the log files have not been created yet
 
-if (!file_exists($localRawLog)) {
-  if(!update_log()) {
-    $error = 'log_permission';
+if (! file_exists($localRawLog)) {
 
-    require_once 'templates/error.php';
-    exit;
-  }
+    if(! update_log()) {
+
+        $error = 'log_permission';
+
+        require_once 'templates/error.php';
+        exit;
+    }
 }
 
 // if cURL module isn't available
 
-if (!function_exists('curl_init')) {
-  $error = 'php_curl';
+if (! function_exists('curl_init')) {
 
-  require_once 'templates/error.php';
-  exit;
+    $error = 'php_curl';
+
+    require_once 'templates/error.php';
+    exit;
 }
 
 // export raw log
 
-if (!export_log()) {
-  $error = 'log_permission';
+if (! export_log()) {
 
-  require_once 'templates/error.php';
-  exit;
+    $error = 'log_permission';
+
+    require_once 'templates/error.php';
+    exit;
 }
 
 // include base template
 
 require_once 'templates/base.php';
-
-?>
